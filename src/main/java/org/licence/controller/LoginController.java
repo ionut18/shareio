@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by ionut on 09.03.2016.
  */
 @Controller
-public class HelloController {
+public class LoginController {
 
-    @RequestMapping("/hello/")
-    public String getHello(){
-        return "hello";
+    @RequestMapping("/login")
+    public String login(){
+        return "login";
     }
 
 }

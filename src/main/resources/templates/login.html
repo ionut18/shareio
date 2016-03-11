@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>shareio</title>
+</head>
+<body>
+<form th:action="@{/login}" method="POST" accept-charset="utf-8" role="form">
+    <input type="text" name="username" placeholder="username"/>
+    <input type="password" name="password" placeholder="password"/>
+    <input type="submit"/>
+</form>
+</body>
+</html>

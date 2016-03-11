@@ -30,3 +30,8 @@ ALTER TABLE ONLY user_role
 
 ALTER TABLE ONLY user_role
 	ADD CONSTRAINT user_fk FOREIGN KEY (id_app_user) REFERENCES app_user(id_app_user);
+
+
+--ALTER
+ALTER TABLE user_role
+	ADD COLUMN username character varying(255);
