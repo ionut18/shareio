@@ -7,5 +7,5 @@ INSERT INTO app_user values(nextval('SEQ_APP_USER'), 'client', 'cli3nt', 'Client
 INSERT INTO user_role values(nextval('SEQ_USER_ROLE'), 'ROLE_CLIENT', 1);
 INSERT INTO user_role values(nextval('SEQ_USER_ROLE'), 'ROLE_ADMIN', 2);
 INSERT INTO user_role values(nextval('SEQ_USER_ROLE'), 'ROLE_MODERATOR', 3);
-INSERT INTO user_role values(nextval('SEQ_USER_ROLE'), 'ROLE_DRIVER', 4);
+INSERT INTO user_role values(nextval('SEQ_USER_ROLE'), 'ROLE_CLIENT', 4);
 INSERT INTO user_role values(nextval('SEQ_USER_ROLE'), 'ROLE_CLIENT', 5);
