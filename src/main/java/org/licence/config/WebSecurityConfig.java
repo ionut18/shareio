@@ -24,20 +24,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery("select username, password, enabled from app_user where username=?")
-                .authoritiesByUsernameQuery("select username, role from user_role where username=?");
+                .authoritiesByUsernameQuery("select username, role from user_role r, app_user u where u.id_app_user = r.id_app_user and username=?");
     }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity.authorizeRequests()
-                .antMatchers("/hello", "/").access("hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR','ROLE_CLIENT')")
+                .antMatchers("/").access("hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR','ROLE_CLIENT')")
                 .anyRequest().permitAll()
                 .and()
                     .formLogin().loginPage("/login")
                     .usernameParameter("username").passwordParameter("password")
                 .and()
-                    .logout().logoutSuccessUrl("/login?logout")
+                    .logout().logoutSuccessUrl("/logout")
                 .and()
                     .csrf();
     }

@@ -13,19 +13,24 @@
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
+            <ul th:if="${user} != null" class="nav navbar-nav">
                 <li>
                     <a href="#">About</a>
                 </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
                 <!--<li>-->
-                    <!--<p th:text="${user}"/>-->
+                    <!--<a href="#">Services</a>-->
                 <!--</li>-->
+                <li>
+                    <a href="/ride/offer">Offer a ride</a>
+                </li>
+                <li>
+                    <div class="fa fa-user">
+                        <span th:text=" ${user}"/>
+                    </div>
+                </li>
+                <li>
+                    <a th:href="@{/logout}" class="fa fa-power-off"/>
+                </li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->

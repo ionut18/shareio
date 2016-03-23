@@ -55,7 +55,13 @@
                                     </div>
                                 </div>
                             </form>
-                            <form id="register-form" th:action="@{/register/}" accept-charset="utf-8" method="post" role="form" style="display: none;" th:object="${user}">
+                            <form id="register-form" th:action="@{/register}" accept-charset="utf-8" method="post" role="form" style="display: none;" th:object="${user}">
+                                <div class="form-group">
+                                    <input type="text" name="firstName" id="firstName" tabindex="1" class="form-control" placeholder="First Name" value=""/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="lastName" id="lastName" tabindex="1" class="form-control" placeholder="Last Name" value=""/>
+                                </div>
                                 <div class="form-group">
                                     <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value=""/>
                                 </div>
