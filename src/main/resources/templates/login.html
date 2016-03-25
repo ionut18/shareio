@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="fragments/head :: head"/>
 <link href="css/login-style.css" rel="stylesheet"/>
@@ -67,6 +67,9 @@
                                 </div>
                                 <div class="form-group">
                                     <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value=""/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="tel" name="telephone" id="telephone" tabindex="1" class="form-control" placeholder="Telephone" value=""/>
                                 </div>
                                 <div class="form-group">
                                     <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password"/>

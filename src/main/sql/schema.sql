@@ -22,9 +22,9 @@ CREATE TABLE ride (
 	destination character varying(255),
 	departure_time timestamp,
 	price smallint,
-	km smallint,
-	avaible_seats smallint,
-	avaible_instead_storage character varying(255)
+	kilometers smallint,
+	available_seats smallint,
+	available_instead_storage character varying(255)
 );
 
 CREATE TABLE car (
@@ -103,5 +103,5 @@ ALTER TABLE ONLY passenger
 
 --ALTER
 ALTER TABLE app_user
-	ADD COLUMN telehpone character varying(255)
+	ADD COLUMN telephone character varying(255)
 

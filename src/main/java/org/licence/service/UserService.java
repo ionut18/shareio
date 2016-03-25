@@ -38,7 +38,7 @@ public class UserService {
             appUserRepository.save(appUser);
             UserRole userRole = new UserRole();
             userRole.setRole("ROLE_CLIENT");
-            userRole.setUser(appUser);
+            userRole.setIdAppUser(appUser.getIdAppUser());
             userRoleRepository.save(userRole);
             return true;
         }
