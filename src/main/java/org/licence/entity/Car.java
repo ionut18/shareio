@@ -22,9 +22,8 @@ public class Car {
 
     private String model;
 
-    private Integer maxSeats;
-
-    private String maxInsteadStorage;
-
     private String comfort;
+
+    @JoinColumn(name = "id_app_user")
+    private Long idAppUser;
 }

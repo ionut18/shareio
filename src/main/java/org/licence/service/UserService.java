@@ -21,8 +21,8 @@ public class UserService {
     @Autowired
     UserRoleRepository userRoleRepository;
 
-    public AppUser getUser(String username, String password) {
-        AppUser appUser = appUserRepository.findByUsernameAndPassword(username, password);
+    public AppUser getUser(String username) {
+        AppUser appUser = appUserRepository.findByUsername(username);
         if(appUser != null) {
             return appUser;
         }

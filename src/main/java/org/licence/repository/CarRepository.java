@@ -7,4 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Created by ionut on 24.03.2016.
  */
 public interface CarRepository extends JpaRepository<Car, Long> {
+
+    Car getByIdAppUser(Long id);
+
+    Car getByIdCar(Long idCar);
+
 }

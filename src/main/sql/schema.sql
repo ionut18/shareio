@@ -31,9 +31,8 @@ CREATE TABLE car (
 	id_car bigint NOT NULL,
 	manufacturer character varying(255),
 	model character varying(255),
-	max_seats smallint,
-	max_instead_storage character varying(255),
-	comfort character varying(255)
+	comfort character varying(255),
+	id_app_user bigint NOT NULL
 );
 
 CREATE TABLE driver (
@@ -100,8 +99,12 @@ ALTER TABLE ONLY passenger
 ALTER TABLE ONLY passenger
 	ADD CONSTRAINT passenger_user_fk FOREIGN KEY (id_app_user) REFERENCES app_user(id_app_user);
 
+ALTER TABLE ONLY car
+	ADD CONSTRAINT car_user_fk FOREIGN KEY (id_app_user) REFERENCES app_user(id_app_user);
 
 --ALTER
 ALTER TABLE app_user
 	ADD COLUMN telephone character varying(255)
 
+ALTER TABLE car
+  ADD COLUMN id_app_user bigint

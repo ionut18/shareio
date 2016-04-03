@@ -38,4 +38,6 @@ public class AppUser {
     private String telephone;
 
     private boolean enabled;
+
+
 }
