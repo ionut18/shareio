@@ -7,13 +7,13 @@ CREATE TABLE app_user (
 	first_name character varying(255),
 	last_name character varying(255),
 	email character varying(255),
-	enabled boolean
+	enabled boolean,
+	id_user_role bigint NOT NULL
 );
 
 CREATE TABLE user_role (
 	id_user_role bigint NOT NULL,
-	role character varying(255),
-	id_app_user bigint
+	role character varying(255)
 );
 
 CREATE TABLE ride (
@@ -81,8 +81,8 @@ ALTER TABLE ONLY driver
 ALTER TABLE ONLY passenger
 	ADD CONSTRAINT passenger_pkey PRIMARY KEY(id_passenger);
 
-ALTER TABLE ONLY user_role
-	ADD CONSTRAINT user_fk FOREIGN KEY (id_app_user) REFERENCES app_user(id_app_user);
+ALTER TABLE ONLY app_user
+	ADD CONSTRAINT user_role_fk FOREIGN KEY (id_user_role) REFERENCES user_role(id_user_role);
 
 ALTER TABLE ONLY driver
 	ADD CONSTRAINT car_fk FOREIGN KEY (id_car) REFERENCES car(id_car);

@@ -1,6 +1,8 @@
 package org.licence.controller;
 
+import org.licence.entity.Ride;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/ride")
 public class RideController {
 
-//    public String view(Model model) {
-//
-//    }
+    @RequestMapping("/")
+    public String view(Model model) {
+        model.addAttribute(new Ride());
+        return "ride/add";
+    }
 
 }
