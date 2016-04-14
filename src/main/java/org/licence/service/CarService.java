@@ -31,6 +31,6 @@ public class CarService {
     }
 
     public Car getCarById(Long id) {
-        return carRepository.getByIdCar(id);
+        return carRepository.getOne(id);
     }
 }

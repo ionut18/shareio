@@ -2,6 +2,7 @@ package org.licence.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@ToString
 public class Ride {
 
     @Id
@@ -31,6 +33,7 @@ public class Ride {
 
     private Integer availableSeats;
 
-    private Integer availableInsteadStorage;
+    private String availableInsteadStorage;
+
 
 }

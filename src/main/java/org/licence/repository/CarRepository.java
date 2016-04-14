@@ -10,6 +10,4 @@ public interface CarRepository extends JpaRepository<Car, Long> {
 
     Car getByIdAppUser(Long id);
 
-    Car getByIdCar(Long idCar);
-
 }

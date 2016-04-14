@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head"/>
+
+<body>
+
+<div th:replace="fragments/nav :: nav"/>
+
+<div class="container">
+
+    <div class="panel panel-green margin-bottom-40">
+        <div class="panel-heading">
+            <h3 class="panel-title">Rides</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th class="center-align">Plecare</th>
+                    <th class="center-align">Destinatie</th>
+                    <th class="center-align">Data plecare</th>
+                    <th class="center-align">Pret</th>
+                    <th class="center-align">Distanta</th>
+                    <th class="center-align">Locuri disponibile</th>
+                    <th class="center-align">Marime maxima bagaje</th>
+                    <th class="center-align">Edit</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="center-align" th:each="ride : ${rideList}">
+                    <td th:text="${ride.departure}"></td>
+                    <td th:text="${ride.destination}"></td>
+                    <td th:text="${ride.departureTime != null ? #dates.format(ride.departureTime, 'dd MMM HH:mm') : ''}"></td>
+                    <td th:text="${ride.price}"></td>
+                    <td th:text="${ride.kilometers}"></td>
+                    <td th:text="${ride.availableSeats}"></td>
+                    <td th:text="${ride.availableInsteadStorage}"></td>
+                    <td>
+                        <div th:if="${ride.idRide} != null">
+                            <input type="text" name="idCar" th:value="${ride.idRide}" style="display: none"/>
+                        </div>
+                        <a th:href="@{/ride/edit/__${ride.idRide}__}">
+                            <button type="button" class="btn btn-sm btn-primary"><span class="fa fa-pencil-square-o"/></button>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+
+</html>
