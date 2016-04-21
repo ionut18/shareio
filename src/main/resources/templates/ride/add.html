@@ -14,10 +14,11 @@
             <h3 class="panel-title">Add a ride</h3>
         </div>
         <div class="panel-body">
-            <form th:action="@{/ride/add/0}" method="post" th:object="${ride}">
+            <form th:action="@{/ride/add/}" method="post" th:object="${ride}">
                 <div th:if="${ride.idRide} != null">
-                    <input type="text" name="idCar" th:value="${ride.idRide}" style="display: none"/>
+                    <input type="text" name="idRide" th:value="${ride.idRide}" style="display: none"/>
                 </div>
+                <input type="text" id="datetimepickerinput" th:value="${ride.departureTime}" style="display: none;"/>
                 <div class="form-group">
                     <label for="departure">Plecare</label>
                     <input type="text" class="form-control" id="departure" name="departure" placeholder="Plecare" th:value="${ride.departure}"/>
@@ -31,7 +32,7 @@
                 <div class="form-group">
                     <label for="datetimepicker">Data plecare</label>
                     <div class='input-group date' id='datetimepicker'>
-                        <input type='text' class="form-control" name="departureTime" th:value="${ride.departureTime}"/>
+                        <input type='text' class="form-control" name="departureTime"/>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -84,15 +85,25 @@
     $( document ).ready(
             function buildSelect() {
                 //if is on edit must be selected the right value by default
-                var select = $('#availableSeatsValue');
-                if(select[0].value != '') {
-                    var option = $('#' + select[0].value);
+                var selectSeats = $('#availableSeatsValue');
+                if(selectSeats[0].value != '') {
+                    var option = $('#' + selectSeats[0].value);
                     option[0].selected = true;
                 }
-            });
+                var selectStorage = $('#availableInsteadStorageValue');
+                if(selectStorage[0].value != '') {
+                    var option = $('#' + selectStorage[0].value);
+                    option[0].selected = true;
+                }
+            }
+    );
+
 
     $(function () {
-        $('#datetimepicker').datetimepicker();
+        $('#datetimepicker').datetimepicker({
+            defaultDate: $('#datetimepickerinput')[0].value,
+            minDate : moment()
+        });
     });
 </script>
 

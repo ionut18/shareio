@@ -39,13 +39,13 @@ public class CarController extends BaseController {
         return "car/add";
     }
 
-    @RequestMapping(value = "/add/0", method = RequestMethod.POST)
+    @RequestMapping(value = "/add/", method = RequestMethod.POST)
     public String addCar(@ModelAttribute("car") Car car) {
         carService.saveCar(car, getUserName());
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/edit/{id}")
+    @RequestMapping(value = "/{id}")
     public String edit(@PathVariable Long id, Model model) {
         if(carService.getCarById(id) != null) {
             model.addAttribute("car", carService.getCarById(id));

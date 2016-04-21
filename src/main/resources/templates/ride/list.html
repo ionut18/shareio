@@ -38,9 +38,9 @@
                     <td th:text="${ride.availableInsteadStorage}"></td>
                     <td>
                         <div th:if="${ride.idRide} != null">
-                            <input type="text" name="idCar" th:value="${ride.idRide}" style="display: none"/>
+                            <input type="text" name="idRide" th:value="${ride.idRide}" style="display: none"/>
                         </div>
-                        <a th:href="@{/ride/edit/__${ride.idRide}__}">
+                        <a th:href="@{/ride/__${ride.idRide}__}">
                             <button type="button" class="btn btn-sm btn-primary"><span class="fa fa-pencil-square-o"/></button>
                         </a>
                     </td>

@@ -14,7 +14,7 @@
             <h3 class="panel-title">Add a car</h3>
         </div>
         <div class="panel-body">
-            <form th:action="@{/car/add/0}" method="post" th:object="${car}">
+            <form th:action="@{/car/add/}" method="post" th:object="${car}">
                 <div th:if="${car.idCar} != null">
                     <input type="text" name="idCar" th:value="${car.idCar}" style="display: none"/>
                 </div>
