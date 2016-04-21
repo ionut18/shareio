@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping("/ride")
-public class RideController {
-//    TODO: De vazut cum pun user mereu pe model(mambo)
+public class RideController extends BaseController {
+
     @Autowired
     RideService rideService;
 
