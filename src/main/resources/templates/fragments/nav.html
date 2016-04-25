@@ -14,9 +14,9 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul th:if="${user} != null" class="nav navbar-nav">
-                <li>
-                    <a href="#">About</a>
-                </li>
+                <!--<li>-->
+                    <!--<a href="#">About</a>-->
+                <!--</li>-->
                 <li>
                     <a th:href="@{/car/}">Car</a>
                 </li>
@@ -27,12 +27,17 @@
                     <a th:href="@{/ride/list}">Rides</a>
                 </li>
                 <li>
-                    <div class="fa fa-user">
+                    <div class="fa fa-user navbar-fa">
                         <span th:text=" ${user}"/>
                     </div>
                 </li>
                 <li>
-                    <a th:href="@{/logout}" class="fa fa-power-off"/>
+                    <a th:href="@{/logout}" class="fa fa-sign-out navbar-fa">&nbsp; Sign out</a>
+                </li>
+            </ul>
+            <ul th:if="${user} == null" class="nav navbar-nav">
+                <li>
+                    <a th:href="@{/login}" class="fa fa-sign-in navbar-fa">&nbsp; Sign in</a>
                 </li>
             </ul>
         </div>

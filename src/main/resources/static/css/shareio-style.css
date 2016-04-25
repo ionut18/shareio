@@ -19,6 +19,19 @@ body {
     -o-background-size: cover;
 }
 
+/*index*/
+
+.textIndex {
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+.indexContent {
+    margin-bottom: 50px;
+}
+
+.searchRideInput {
+    margin: 2em 0 2em;
+}
 
 .tagline {
     text-shadow: 0 0 10px #000;
@@ -37,27 +50,28 @@ footer {
     float: right;
 }
 
-.fa-user {
+.navbar-fa {
     padding-top: 15px;
     color: #9D9D9D;
     font-size: 20px;
     margin-left: 20px;
 }
 
-.fa-power-off {
-    padding-top: 15px;
-    color: #9D9D9D;
-    font-size: 20px;
-    margin-left: 15px;
+.footerText {
+    color: #9d9d9d;
+    text-align: center;
+    margin-top: 10px;
 }
 
+/*other pages*/
+
 .panel-green {
-    border-color: #8DC63F;
+    border-color: #334E0D;
     margin-top: 3em;
 }
 
 .panel-green .panel-heading {
-    background: #8DC63F;
+    background: #334E0D;
 }
 
 .panel-green .panel-heading h3 {
