@@ -36,8 +36,19 @@ public class RideService {
     @Autowired
     private DriverRepository driverRepository;
 
-    public void saveRide(Ride ride) {
+    public void saveRide(Ride ride, String username) {
         rideRepository.save(ride);
+
+        AppUser user = userRepository.findByUsername(username);
+        Car car = carRepository.getByIdAppUser(user.getIdAppUser());
+
+        Driver driver = new Driver();
+        driver.setIdAppUser(user.getIdAppUser());
+        driver.setIdCar(car.getIdCar());
+        driver.setIdRide(ride.getIdRide());
+        driver.setRating("Good");
+
+        driverRepository.save(driver);
     }
 
     public List<RideModel> getAllRides() {

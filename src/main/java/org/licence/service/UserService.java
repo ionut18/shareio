@@ -21,16 +21,6 @@ public class UserService {
     @Autowired
     UserRoleRepository userRoleRepository;
 
-    public AppUser getUser(String username) {
-        AppUser appUser = appUserRepository.findByUsername(username);
-        if(appUser != null) {
-            return appUser;
-        }
-        else {
-            return null;
-        }
-    }
-
     @Transactional
     public Boolean saveUser(AppUser appUser) {
         try {

@@ -22,6 +22,8 @@ public class RideModel {
 
     private String departureTime;
 
+    private Integer price;
+
     private Integer distance;
 
     private Integer availableSeats;

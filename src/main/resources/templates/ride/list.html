@@ -51,13 +51,19 @@
                 <li class="list-group-item" th:each="ride : ${rideList}">
                     <div class="row">
                         <div class="col-lg-4">
-                            <p th:value="ride.driverName"> </p>
-                            <p th:value="ride.carName"> </p>
-                            <p th:value="ride.rating"> </p>
+                            <div th:text="${ride.driverName}"> </div>
+                            <div th:text="${ride.carName}"> </div>
+                            <div th:text="${ride.rating}"> </div>
                         </div>
 
                         <div class="col-lg-8">
-
+                            <div th:text="${ride.departure}"> </div>
+                            <div th:text="${ride.destination}"> </div>
+                            <div th:text="${ride.departureTime}"> </div>
+                            <div th:text="${ride.distance}"> </div>
+                            <div th:text="${ride.price}"> </div>
+                            <div th:text="${ride.availableSeats}"> </div>
+                            <div th:text="${ride.availableInsteadStorage}"> </div>
                         </div>
                     </div>
                 </li>

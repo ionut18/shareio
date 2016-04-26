@@ -21,6 +21,7 @@ public class RideMapper {
         rideModel.setDestination(ride.getDestination());
         rideModel.setDepartureTime(ride.getDepartureTime().toString());
         rideModel.setDistance(ride.getKilometers());
+        rideModel.setPrice(ride.getPrice());
         rideModel.setRating(driver.getRating());
         rideModel.setAvailableInsteadStorage(ride.getAvailableInsteadStorage());
         rideModel.setAvailableSeats(ride.getAvailableSeats());

@@ -37,6 +37,9 @@
             </ul>
             <ul th:if="${user} == null" class="nav navbar-nav">
                 <li>
+                    <a th:href="@{/ride/list}">Rides</a>
+                </li>
+                <li>
                     <a th:href="@{/login}" class="fa fa-sign-in navbar-fa">&nbsp; Sign in</a>
                 </li>
             </ul>

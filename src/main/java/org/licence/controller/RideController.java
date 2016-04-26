@@ -34,7 +34,7 @@ public class RideController extends BaseController {
 
     @RequestMapping(value = "/add/", method = RequestMethod.POST)
     public String addRide(@ModelAttribute("ride") Ride ride) {
-        rideService.saveRide(ride);
+        rideService.saveRide(ride, getUserName());
         return "redirect:/";
     }
 
