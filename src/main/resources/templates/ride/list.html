@@ -50,21 +50,34 @@
             <ul class="list-group">
                 <li class="list-group-item" th:each="ride : ${rideList}">
                     <div class="row">
-                        <div class="col-lg-4">
-                            <div th:text="${ride.driverName}"> </div>
-                            <div th:text="${ride.carName}"> </div>
-                            <div th:text="${ride.rating}"> </div>
+
+                        <div class="col-lg-3" style="border-right: 1px solid #DDD;">
+                            <div class="panel-body">
+                                <div>
+                                    <img th:src="@{/img/driver-male-72.png}" width="72" height="72" style="border-radius: 50px;"/>
+                                    <span th:text="${ride.driverName}" style="margin-left: 2em;"> </span>
+                                </div>
+                                <div style="margin-top: 1em">
+                                    <span>Masina: &nbsp;</span>
+                                    <a data-toggle="tooltip" th:title="'Confort: ' + ${ride.carComfort}"><span th:text="${ride.carName}"> </span></a>
+                                </div>
+                                <div style="margin-top: 1em">
+                                    <span>Rating: &nbsp;</span><span th:text="${ride.rating}"> </span>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="col-lg-8">
-                            <div th:text="${ride.departure}"> </div>
-                            <div th:text="${ride.destination}"> </div>
-                            <div th:text="${ride.departureTime}"> </div>
-                            <div th:text="${ride.distance}"> </div>
-                            <div th:text="${ride.price}"> </div>
-                            <div th:text="${ride.availableSeats}"> </div>
-                            <div th:text="${ride.availableInsteadStorage}"> </div>
+                        <div class="col-lg-9">
+                            <div class="panel-body">
+                                <span th:text="${ride.departure}"> </span> -> <span th:text="${ride.destination}"> </span>
+                                <div th:text="${ride.departureTime}"> </div>
+                                <div th:text="${ride.distance}"> </div>
+                                <div th:text="${ride.price}"> </div>
+                                <div th:text="${ride.availableSeats}"> </div>
+                                <div th:text="${ride.availableInsteadStorage}"> </div>
+                            </div>
                         </div>
+
                     </div>
                 </li>
             </ul>
@@ -75,6 +88,12 @@
 </div>
 
 <div th:replace="fragments/footer :: footer"/>
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 
 </body>
 

@@ -17,6 +17,7 @@ public class RideMapper {
         RideModel rideModel = new RideModel();
         rideModel.setDriverName(user.getFirstName() + " " + user.getLastName().charAt(0));
         rideModel.setCarName(car.getManufacturer() + " " + car.getModel());
+        rideModel.setCarComfort(car.getComfort());
         rideModel.setDeparture(ride.getDeparture());
         rideModel.setDestination(ride.getDestination());
         rideModel.setDepartureTime(ride.getDepartureTime().toString());

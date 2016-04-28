@@ -14,6 +14,8 @@ public class RideModel {
 
     private String carName;
 
+    private String carComfort;
+
     private String rating;
 
     private String departure;
