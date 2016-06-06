@@ -14,17 +14,20 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul th:if="${user} != null" class="nav navbar-nav">
-                <!--<li>-->
-                    <!--<a href="#">About</a>-->
-                <!--</li>-->
                 <li>
-                    <a th:href="@{/car/}">Car</a>
+                    <a th:href="@{/message/}">Mesaje</a>
                 </li>
                 <li>
-                    <a th:href="@{/ride/add}">Offer a ride</a>
+                    <a th:href="@{/car/}">Masina</a>
                 </li>
                 <li>
-                    <a th:href="@{/ride/list}">Rides</a>
+                    <a th:href="@{/ride/add}">Ofera o cursa</a>
+                </li>
+                <li>
+                    <a th:href="@{/ride/list/}">Cursele mele</a>
+                </li>
+                <li>
+                    <a th:href="@{/ride/list}">Curse</a>
                 </li>
                 <li>
                     <div class="fa fa-user navbar-fa">
@@ -37,7 +40,7 @@
             </ul>
             <ul th:if="${user} == null" class="nav navbar-nav">
                 <li>
-                    <a th:href="@{/ride/list}">Rides</a>
+                    <a th:href="@{/ride/list}">Curse</a>
                 </li>
                 <li>
                     <a th:href="@{/login}" class="fa fa-sign-in navbar-fa">&nbsp; Sign in</a>

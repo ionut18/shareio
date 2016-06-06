@@ -40,7 +40,6 @@ public class RegistrationController {
         if(auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        System.out.println(auth.isAuthenticated());
         return "redirect:/login";
     }
 }

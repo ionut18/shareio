@@ -33,13 +33,13 @@
 
             <hr/>
 
-            <a class="btn btn-default btn-lg" th:href="@{/ride/list}">Vezi curse &raquo;</a>
+            <!--<a class="btn btn-default btn-lg" th:href="@{/ride/list}">Vezi curse &raquo;</a>-->
         </div>
         <div class="col-sm-4">
             <h2 class="textIndex searchRideMarginLeft">Cauta o cursa</h2>
-            <form th:action="@{/ride/list}">
-                <input type="text" class="form-control searchRideInput" name="departure" placeholder="De la"/>
-                <input type="text" class="form-control searchRideInput" name="destination" placeholder="Pana la"/>
+            <form th:action="@{/ride/list}" th:method="GET" th:object="${searchRideModel}">
+                <input type="text" class="form-control searchRideInput" name="departure" th:value="${searchRideModel.departure}" placeholder="De la"/>
+                <input type="text" class="form-control searchRideInput" name="destination" th:value="${searchRideModel.destination}" placeholder="Pana la"/>
                 <button type="submit" class="btn btn-success searchRideMarginLeft">Cauta</button>
             </form>
         </div>

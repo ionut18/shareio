@@ -27,7 +27,7 @@ public class CarService {
 
     public Car getCarByUsername(String username) {
         AppUser user = userRepository.findByUsername(username);
-        return carRepository.getByIdAppUser(user.getIdAppUser());
+        return carRepository.findByIdAppUser(user.getIdAppUser());
     }
 
     public Car getCarById(Long id) {

@@ -1,6 +1,7 @@
 package org.licence.controller;
 
 import org.licence.entity.Driver;
+import org.licence.model.SearchRideModel;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ public class IndexController extends BaseController {
 
     @RequestMapping("/")
     public String getIndex(Model model){
+        model.addAttribute("searchRideModel", new SearchRideModel());
         model.addAttribute("user", getUserName());
         return "index";
     }

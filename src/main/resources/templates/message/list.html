@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head"/>
+
+<body>
+
+<div th:replace="fragments/nav :: nav"/>
+
+<div class="container">
+
+    <div class="panel panel-green margin-bottom-40">
+        <div class="panel-heading">
+            <h3 class="panel-title">Messages</h3>
+        </div>
+        <div th:unless="${#lists.isEmpty(messages)}">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <!--<div class = "panel-heading">-->
+                    <!--<h3 class = "panel-title" th:text="#{chat.discussions.title}"></h3>-->
+                    <!--</div>-->
+                    <div class="panel-body">
+                        <div class="form-group row" th:each="msg : ${messages}">
+                            <form th:action="@{/message/handle}" th:method="POST" th:object="${messageModel}">
+                                <div class="col-md-3">
+                                    <a data-toggle="tooltip" th:title="'Nume:' + ${msg.user.firstName} + ' Email:' + ${msg.user.email} + ' Telefon:' + ${msg.user.telephone}"><span class="fontBold" th:text="${msg.sender}"> </span></a>
+                                    <div class="ora" th:text="${msg.date}"></div>
+                                </div>
+                                <div class="col-md-9" th:text="${msg.text}">
+                                </div>
+                                <input class="invisible" name="idRide" th:value="${msg.idRide}"></input>
+                                <input class="invisible" name="idMessage" th:value="${msg.idMessage}"></input>
+                                <input class="invisible" name="receiver" th:value="${msg.sender}"></input>
+                                <input class="invisible" name="driver" th:value="${msg.driver}"></input>
+                                <br/>
+                                <div th:if="${msg.receiver} == ${msg.driver} and ${msg.action} == null">
+                                    <button type="submit" class="btn btn-success margin1em" name="action" value="approved">Accepta</button>
+                                    <button type="submit" class="btn btn-danger" name="action" value="rejected">Respinge</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div th:replace="fragments/footer :: footer"/>
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+</body>
+
+</html>

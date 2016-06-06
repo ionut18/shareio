@@ -9,72 +9,60 @@
 
 <div class="container">
 
-    <div class="panel panel-green margin-bottom-40">
-        <div class="panel-heading">
-            <h3 class="panel-title">Rides</h3>
-        </div>
+    <div class="panel panel-green margin-bottom-container">
         <div class="panel-body">
-            <!--<table class="table table-hover table-bordered">-->
-                <!--<thead>-->
-                <!--<tr>-->
-                    <!--<th class="center-align">Plecare</th>-->
-                    <!--<th class="center-align">Destinatie</th>-->
-                    <!--<th class="center-align">Data plecare</th>-->
-                    <!--<th class="center-align">Pret</th>-->
-                    <!--<th class="center-align">Distanta</th>-->
-                    <!--<th class="center-align">Locuri disponibile</th>-->
-                    <!--<th class="center-align">Marime maxima bagaje</th>-->
-                    <!--<th class="center-align">Edit</th>-->
-                <!--</tr>-->
-                <!--</thead>-->
-                <!--<tbody>-->
-                <!--<tr class="center-align" th:each="ride : ${rideList}">-->
-                    <!--<td th:text="${ride.departure}"></td>-->
-                    <!--<td th:text="${ride.destination}"></td>-->
-                    <!--<td th:text="${ride.departureTime != null ? #dates.format(ride.departureTime, 'dd MMM HH:mm') : ''}"></td>-->
-                    <!--<td th:text="${ride.price}"></td>-->
-                    <!--<td th:text="${ride.kilometers}"></td>-->
-                    <!--<td th:text="${ride.availableSeats}"></td>-->
-                    <!--<td th:text="${ride.availableInsteadStorage}"></td>-->
-                    <!--<td>-->
-                        <!--<div th:if="${ride.idRide} != null">-->
-                            <!--<input type="text" name="idRide" th:value="${ride.idRide}" style="display: none"/>-->
-                        <!--</div>-->
-                        <!--<a th:href="@{/ride/__${ride.idRide}__}">-->
-                            <!--<button type="button" class="btn btn-sm btn-primary"><span class="fa fa-pencil-square-o"/></button>-->
-                        <!--</a>-->
-                    <!--</td>-->
-                <!--</tr>-->
-                <!--</tbody>-->
-            <!--</table>-->
+            <form th:action="@{/ride/list}" th:method="GET" th:object="${searchRideModel}">
+                <div th:if="${#httpServletRequest.requestURI} != '/shareio/ride/list/'" class="row marginBottom">
+                    <div class="col-lg-5">
+                        <input type="text" class="form-control searchRideInput" name="departure" th:value="${searchRideModel.departure}" placeholder="De la"/>
+                    </div>
+                    <div class="col-lg-5">
+                        <input type="text" class="form-control searchRideInput" name="destination" th:value="${searchRideModel.destination}" placeholder="Pana la"/>
+                    </div>
+                    <div class="col-lg-2 marginTopButton">
+                        <button type="submit" class="btn btn-success searchRideMarginLeft buttonFullWidth">Cauta</button>
+                    </div>
+                </div>
+            </form>
             <ul class="list-group">
                 <li class="list-group-item" th:each="ride : ${rideList}">
                     <div class="row">
-
-                        <div class="col-lg-3" style="border-right: 1px solid #DDD;">
+                        <div class="col-lg-3 driverPanel">
                             <div class="panel-body">
                                 <div>
-                                    <img th:src="@{/img/driver-male-72.png}" width="72" height="72" style="border-radius: 50px;"/>
-                                    <span th:text="${ride.driverName}" style="margin-left: 2em;"> </span>
+                                    <img class="driverImage" th:src="@{/img/driver-male-72.png}"/>
+                                    <span class="marginLeft" th:text="${ride.driverName}"> </span>
                                 </div>
-                                <div style="margin-top: 1em">
+                                <div class="marginTop">
                                     <span>Masina: &nbsp;</span>
                                     <a data-toggle="tooltip" th:title="'Confort: ' + ${ride.carComfort}"><span th:text="${ride.carName}"> </span></a>
                                 </div>
-                                <div style="margin-top: 1em">
+                                <div class="marginTop">
                                     <span>Rating: &nbsp;</span><span th:text="${ride.rating}"> </span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-lg-9">
-                            <div class="panel-body">
-                                <span th:text="${ride.departure}"> </span> -> <span th:text="${ride.destination}"> </span>
-                                <div th:text="${ride.departureTime}"> </div>
-                                <div th:text="${ride.distance}"> </div>
-                                <div th:text="${ride.price}"> </div>
-                                <div th:text="${ride.availableSeats}"> </div>
-                                <div th:text="${ride.availableInsteadStorage}"> </div>
+                            <div class="panel-heading rideDirections">
+                                <span th:text="${ride.departure}"> </span> <span class="fa fa-arrow-right"></span> <span th:text="${ride.destination}"> </span>
+                                <a th:if="${#httpServletRequest.requestURI} == '/shareio/ride/list/'" th:href="@{/ride/__${ride.idRide}__}" class="fa fa-pencil editRide" aria-hidden="true"></a>
+                            </div>
+                            <div class="panel-body rideListDetails">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp; &nbsp; <span th:text="${ride.departureTime}"> </span>
+                                <br/>
+                                <i class="fa fa-road" aria-hidden="true"></i> &nbsp; &nbsp; <span th:text="${ride.distance}"> &nbsp; km </span>
+                                <br/>
+                                <i class="fa fa-money" aria-hidden="true"></i> &nbsp; &nbsp; <span th:text="${ride.price}"> </span>
+                                <br/>
+                                <i class="fa fa-male" aria-hidden="true"></i> &nbsp; &nbsp; &nbsp; <span th:text="${ride.availableSeats}"> </span>
+                                <br/>
+                                <i class="fa fa-suitcase" aria-hidden="true"></i> &nbsp; &nbsp; <span th:text="${ride.availableInsteadStorage}"> </span>
+                                <div class="rideReservation">
+                                    <a th:if="${#httpServletRequest.requestURI} != '/shareio/ride/list/'" th:href="@{/ride/reserve/__${ride.idRide}__}">
+                                        <i class="fa fa-paper-plane" aria-hidden="true"></i> &nbsp; <span>Rezerva acum!</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
 

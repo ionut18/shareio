@@ -30,7 +30,7 @@ body {
 }
 
 .searchRideInput {
-    margin: 2em 0 2em;
+    margin: 1em 0 1em;
 }
 
 .tagline {
@@ -85,4 +85,65 @@ footer {
 
 .center-align {
     text-align:center;
+}
+
+.rideListDetails {
+    font-size: 20px;
+}
+
+.rideDirections {
+    font-size: 22px;
+    color: white;
+}
+
+.rideReservation {
+    float: right;
+}
+
+.invisible {
+    display: none;
+}
+
+.margin-bottom-contaier {
+    margin-bottom: 5em;
+}
+
+.marginTop {
+    margin-top: 1em;
+}
+
+.marginBottom {
+    margin-bottom: 1em;
+}
+
+.buttonFullWidth {
+    width: 100%;
+}
+
+.fontBold {
+    font-weight: bold;
+}
+
+.driverPanel {
+    border-right: 1px solid #DDD;
+}
+
+.marginLeft {
+    margin-left: 2em;
+}
+
+.driverImage {
+    border-radius: 50px;
+    height: 72px;
+    width: 72px;
+}
+
+.editRide {
+    float: right;
+    color: white;
+    margin-top: 0.2em;
+}
+
+.margin1em {
+    margin: 1em;
 }

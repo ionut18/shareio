@@ -9,16 +9,16 @@
 
 <div class="container">
 
-    <div class="panel panel-green margin-bottom-40">
+    <div class="panel panel-green margin-bottom-container">
         <div class="panel-heading">
             <h3 class="panel-title">Add a ride</h3>
         </div>
         <div class="panel-body">
             <form th:action="@{/ride/add/}" method="post" th:object="${ride}">
                 <div th:if="${ride.idRide} != null">
-                    <input type="text" name="idRide" th:value="${ride.idRide}" style="display: none"/>
+                    <input class="invisible" type="text" name="idRide" th:value="${ride.idRide}"/>
                 </div>
-                <input type="text" id="datetimepickerinput" th:value="${ride.departureTime}" style="display: none;"/>
+                <input class="invisible" type="text" id="datetimepickerinput" th:value="${ride.departureTime}"/>
                 <div class="form-group">
                     <label for="departure">Plecare</label>
                     <input type="text" class="form-control" id="departure" name="departure" placeholder="Plecare" th:value="${ride.departure}"/>
@@ -32,7 +32,7 @@
                 <div class="form-group">
                     <label for="datetimepicker">Data plecare</label>
                     <div class='input-group date' id='datetimepicker'>
-                        <input type='text' class="form-control" name="departureTime"/>
+                        <input type='text' class="form-control" name="departureTime" id="datetimepicker-input"/>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -51,7 +51,7 @@
 
                 <div class="form-group">
                     <label for="availableSeats">Locuri disponibile</label>
-                    <input type="text" id="availableSeatsValue" th:value="${ride.availableSeats}" style="display: none"/>
+                    <input class="invisible" type="text" id="availableSeatsValue" th:value="${ride.availableSeats}"/>
                     <select class="form-control" name="availableSeats" id="availableSeats">
                         <option id="1">1</option>
                         <option id="2">2</option>
@@ -62,7 +62,7 @@
 
                 <div class="form-group">
                     <label for="availableInsteadStorage">Marime maxima bagaje</label>
-                    <input type="text" id="availableInsteadStorageValue" th:value="${ride.availableInsteadStorage}" style="display: none"/>
+                    <input class="invisible" type="text" id="availableInsteadStorageValue" th:value="${ride.availableInsteadStorage}"/>
                     <select class="form-control" name="availableInsteadStorage" id="availableInsteadStorage">
                         <option id="Mic">Mic</option>
                         <option id="Mediu">Mediu</option>
@@ -81,7 +81,7 @@
 
 </body>
 
-<script>
+<script type="text/javascript">
     $( document ).ready(
             function buildSelect() {
                 //if is on edit must be selected the right value by default
@@ -100,10 +100,20 @@
 
 
     $(function () {
+        var d = new Date();
+        var month = d.getMonth();
+        var day = d.getDate();
+        var year = d.getFullYear();
+
+//        console.log($('#datetimepickerinput')[0].value.substring(0, 10).replace("-", "/"));
         $('#datetimepicker').datetimepicker({
-            defaultDate: $('#datetimepickerinput')[0].value,
             minDate : moment()
         });
+//        $("#datetimepicker").data('DateTimePicker').setLocalDate(new Date(year, month, day, 00, 01));
+
+//        var date = $('#datetimepickerinput')[0].value.substring(0, 10);
+//        $('#datetimepicker-input).val(date);
+
     });
 </script>
 

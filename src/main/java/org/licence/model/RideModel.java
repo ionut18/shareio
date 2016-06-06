@@ -10,6 +10,8 @@ import lombok.Setter;
 @Setter
 public class RideModel {
 
+    private Long idRide;
+
     private String driverName;
 
     private String carName;

@@ -1,6 +1,7 @@
 package org.licence.controller;
 
 import org.licence.entity.Ride;
+import org.licence.model.SearchRideModel;
 import org.licence.service.RideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +22,14 @@ public class RideController extends BaseController {
     RideService rideService;
 
     @RequestMapping("/list")
-    public String getRides(Model model) {
-        model.addAttribute("rideList", rideService.getAllRides());
+    public String getRides(@ModelAttribute("searchRideModel") SearchRideModel searchRideModel, Model model) {
+        model.addAttribute("rideList", rideService.getAllRides(searchRideModel, null));
+        return "ride/list";
+    }
+
+    @RequestMapping("/list/")
+    public String getUserRides(@ModelAttribute("searchRideModel") SearchRideModel searchRideModel, Model model) {
+        model.addAttribute("rideList", rideService.getAllRides(searchRideModel, getUserName()));
         return "ride/list";
     }
 
@@ -34,7 +41,7 @@ public class RideController extends BaseController {
 
     @RequestMapping(value = "/add/", method = RequestMethod.POST)
     public String addRide(@ModelAttribute("ride") Ride ride) {
-        rideService.saveRide(ride, getUserName());
+        rideService.saveRideAndDriver(ride, getUserName());
         return "redirect:/";
     }
 
@@ -47,5 +54,11 @@ public class RideController extends BaseController {
         else {
             return "redirect:/";
         }
+    }
+
+    @RequestMapping(value = "/reserve/{id}")
+    public String makeReservation(@PathVariable Long id) {
+        rideService.makeReservation(id, getUserName());
+        return "redirect:/ride/list";
     }
 }
