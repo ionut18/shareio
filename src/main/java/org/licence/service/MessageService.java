@@ -1,9 +1,13 @@
 package org.licence.service;
 
+import org.licence.entity.AppUser;
 import org.licence.entity.Message;
+import org.licence.entity.Passenger;
 import org.licence.entity.Ride;
 import org.licence.model.MessageModel;
+import org.licence.repository.AppUserRepository;
 import org.licence.repository.MessageRepository;
+import org.licence.repository.PassengerRepository;
 import org.licence.util.MessageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +24,12 @@ public class MessageService {
 
     @Autowired
     MessageRepository messageRepository;
+
+    @Autowired
+    AppUserRepository appUserRepository;
+
+    @Autowired
+    PassengerRepository passengerRepository;
 
     @Autowired
     RideService rideService;
@@ -68,6 +78,7 @@ public class MessageService {
                     ride.getDestination() + " din data de " + ride.getDepartureTime().toString().substring(0, 10);
 
             decrementNoSeats(messageModel.getIdRide());
+            savePassenger(messageModel.getReceiver(), messageModel.getIdRide());
         } else {
             defaultMessage = "Nu te-am acceptat in calatoria de la " + ride.getDeparture() + " la " +
                     ride.getDestination() + " din data de " + ride.getDepartureTime().toString().substring(0, 10);
@@ -85,6 +96,17 @@ public class MessageService {
         message.setDate(new Date());
 
         messageRepository.save(message);
+    }
+
+    private void savePassenger(String receiver, Long idRide) {
+
+        AppUser user = appUserRepository.findByUsername(receiver);
+
+        Passenger passenger = new Passenger();
+        passenger.setIdRide(idRide);
+        passenger.setIdAppUser(user.getIdAppUser());
+
+        passengerRepository.save(passenger);
     }
 
     private void changeMessageAction(Long idMessage) {

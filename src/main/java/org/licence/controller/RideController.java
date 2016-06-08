@@ -1,15 +1,18 @@
 package org.licence.controller;
 
 import org.licence.entity.Ride;
+import org.licence.model.PageWrapper;
+import org.licence.model.RideModel;
 import org.licence.model.SearchRideModel;
 import org.licence.service.RideService;
+import org.licence.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by ionut on 24.03.2016.
@@ -21,15 +24,33 @@ public class RideController extends BaseController {
     @Autowired
     RideService rideService;
 
+    @Autowired
+    UserService userService;
+
     @RequestMapping("/list")
-    public String getRides(@ModelAttribute("searchRideModel") SearchRideModel searchRideModel, Model model) {
-        model.addAttribute("rideList", rideService.getAllRides(searchRideModel, null));
+    public String getRides(@ModelAttribute("searchRideModel") SearchRideModel searchRideModel, @RequestParam(value = "page.number", required = false) String page, Model model) {
+        if(page == null) {
+            page = "1";
+        }
+        Pageable pageable = new PageRequest(Integer.parseInt(page)-1, 10, Sort.Direction.ASC, "departureTime");
+        PageWrapper<RideModel> pageWrapper = new PageWrapper<>(rideService.getAllRides(pageable, searchRideModel), "/ride/list");
+        model.addAttribute("rideListPage", pageWrapper);
         return "ride/list";
     }
 
-    @RequestMapping("/list/")
-    public String getUserRides(@ModelAttribute("searchRideModel") SearchRideModel searchRideModel, Model model) {
-        model.addAttribute("rideList", rideService.getAllRides(searchRideModel, getUserName()));
+    @RequestMapping("/myList")
+    public String getUserRides(@ModelAttribute("searchRideModel") SearchRideModel searchRideModel, @RequestParam(value = "page.number", required = false) String page, Model model) {
+        if(page == null) {
+            page = "1";
+        }
+        PageWrapper<RideModel> pageWrapper;
+        Pageable pageable = new PageRequest(Integer.parseInt(page)-1, 10, Sort.Direction.ASC, "idRide");
+        if(userService.getUserRole(getUserName()).equals("ROLE_CLIENT")) {
+            pageWrapper = new PageWrapper<>(rideService.getAllRidesForUser(pageable, getUserName()), "/ride/myList");
+        } else /*if(userService.getUserRole(getUserName()).equals("ROLE_ADMIN"))*/ {
+            pageWrapper = new PageWrapper<>(rideService.getAllRides(pageable, searchRideModel), "/ride/myList");
+        }
+        model.addAttribute("rideListPage", pageWrapper);
         return "ride/list";
     }
 

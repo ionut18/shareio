@@ -12,20 +12,20 @@
     <div class="panel panel-green margin-bottom-container">
         <div class="panel-body">
             <form th:action="@{/ride/list}" th:method="GET" th:object="${searchRideModel}">
-                <div th:if="${#httpServletRequest.requestURI} != '/shareio/ride/list/'" class="row marginBottom">
+                <div th:if="${#httpServletRequest.requestURI} != '/shareio/ride/myList'" class="row marginBottom">
                     <div class="col-lg-5">
                         <input type="text" class="form-control searchRideInput" name="departure" th:value="${searchRideModel.departure}" placeholder="De la"/>
                     </div>
                     <div class="col-lg-5">
                         <input type="text" class="form-control searchRideInput" name="destination" th:value="${searchRideModel.destination}" placeholder="Pana la"/>
                     </div>
-                    <div class="col-lg-2 marginTopButton">
+                    <div class="col-lg-2 marginTop">
                         <button type="submit" class="btn btn-success searchRideMarginLeft buttonFullWidth">Cauta</button>
                     </div>
                 </div>
             </form>
             <ul class="list-group">
-                <li class="list-group-item" th:each="ride : ${rideList}">
+                <li class="list-group-item" th:each="ride : ${rideListPage.content}">
                     <div class="row">
                         <div class="col-lg-3 driverPanel">
                             <div class="panel-body">
@@ -46,7 +46,7 @@
                         <div class="col-lg-9">
                             <div class="panel-heading rideDirections">
                                 <span th:text="${ride.departure}"> </span> <span class="fa fa-arrow-right"></span> <span th:text="${ride.destination}"> </span>
-                                <a th:if="${#httpServletRequest.requestURI} == '/shareio/ride/list/'" th:href="@{/ride/__${ride.idRide}__}" class="fa fa-pencil editRide" aria-hidden="true"></a>
+                                <a th:if="${#httpServletRequest.requestURI} == '/shareio/ride/myList'" th:href="@{/ride/__${ride.idRide}__}" class="fa fa-pencil editRide" aria-hidden="true"></a>
                             </div>
                             <div class="panel-body rideListDetails">
                                 <i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp; &nbsp; <span th:text="${ride.departureTime}"> </span>
@@ -59,7 +59,7 @@
                                 <br/>
                                 <i class="fa fa-suitcase" aria-hidden="true"></i> &nbsp; &nbsp; <span th:text="${ride.availableInsteadStorage}"> </span>
                                 <div class="rideReservation">
-                                    <a th:if="${#httpServletRequest.requestURI} != '/shareio/ride/list/'" th:href="@{/ride/reserve/__${ride.idRide}__}">
+                                    <a th:if="${#httpServletRequest.requestURI} != '/shareio/ride/myList'" th:href="@{/ride/reserve/__${ride.idRide}__}">
                                         <i class="fa fa-paper-plane" aria-hidden="true"></i> &nbsp; <span>Rezerva acum!</span>
                                     </a>
                                 </div>
@@ -69,6 +69,7 @@
                     </div>
                 </li>
             </ul>
+            <div th:replace="fragments/pagination :: paginationbar(${rideListPage})"></div>
         </div>
     </div>
 

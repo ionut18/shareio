@@ -1,22 +1,33 @@
 package org.licence.repository;
 
 import org.licence.entity.Ride;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by ionut on 24.03.2016.
  */
 public interface RideRepository extends JpaRepository<Ride, Long> {
 
-    List<Ride> findByDepartureIgnoreCaseAndDestinationIgnoreCaseAndDepartureTimeGreaterThan(String departure, String destination, Date departureTime);
+    Page<Ride> findByDepartureIgnoreCaseAndDestinationIgnoreCaseAndDepartureTimeGreaterThan(Pageable pageable, String departure, String destination, Date departureTime);
 
-    List<Ride> findByDepartureIgnoreCaseAndDepartureTimeGreaterThan(String departure, Date departureTime);
+    Long countByDepartureIgnoreCaseAndDestinationIgnoreCaseAndDepartureTimeGreaterThan(String departure, String destination, Date departureTime);
 
-    List<Ride> findByDestinationIgnoreCaseAndDepartureTimeGreaterThan(String destination, Date departureTime);
+    Page<Ride> findByDepartureIgnoreCaseAndDepartureTimeGreaterThan(Pageable pageable, String departure, Date departureTime);
 
-    List<Ride> findByDepartureTimeGreaterThan(Date departureTime);
+    Long countByDepartureIgnoreCaseAndDepartureTimeGreaterThan(String departure, Date departureTime);
+
+    Page<Ride> findByDestinationIgnoreCaseAndDepartureTimeGreaterThan(Pageable pageable, String destination, Date departureTime);
+
+    Long countByDestinationIgnoreCaseAndDepartureTimeGreaterThan(String destination, Date departureTime);
+
+    Page<Ride> findByDepartureTimeGreaterThan(Pageable pageable, Date departureTime);
+
+    Ride findByIdRideAndDepartureTimeGreaterThan(Long idRide, Date departureTime);
+
+    Long countByDepartureTimeGreaterThan(Date departureTime);
 
 }

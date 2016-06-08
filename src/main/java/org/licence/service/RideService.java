@@ -12,6 +12,10 @@ import org.licence.repository.DriverRepository;
 import org.licence.repository.RideRepository;
 import org.licence.util.RideMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -66,69 +70,108 @@ public class RideService {
         driverRepository.save(driver);
     }
 
-    public List<RideModel> getAllRides(SearchRideModel searchRideModel, String username) {
+    public Page<RideModel> getAllRides(Pageable pageable, SearchRideModel searchRideModel) {
 
-        List<Ride> rides;
-
-        if(username != null) {
-            rides = getUserRides(searchRideModel, username);
-        } else {
-            rides = getRides(searchRideModel);
-        }
-
-        List<RideModel> rideModels = new ArrayList<>();
-
-        for(Ride ride : rides) {
-            Driver driver = driverRepository.getByIdRide(ride.getIdRide());
-            AppUser user = userRepository.findOne(driver.getIdAppUser());
-            Car car = carRepository.findOne(driver.getIdCar());
-
-            RideModel rideModel = rideMapper.RideModelMapper(ride, driver, user, car);
-            if(rideModel != null) {
-                rideModels.add(rideModel);
-            }
-        }
-
-        return rideModels;
-    }
-
-    private List<Ride> getRides(SearchRideModel searchRideModel) {
-        List<Ride> rides;
+        Page<Ride> rides;
+        Long noRides;
         if(searchRideModel.getDeparture() != null && searchRideModel.getDestination() != null) {
             if (!searchRideModel.getDeparture().equals("") && !searchRideModel.getDestination().equals("")) {
-                rides = rideRepository.findByDepartureIgnoreCaseAndDestinationIgnoreCaseAndDepartureTimeGreaterThan(searchRideModel.getDeparture(), searchRideModel.getDestination(), new Date());
+                rides = rideRepository.findByDepartureIgnoreCaseAndDestinationIgnoreCaseAndDepartureTimeGreaterThan(pageable, searchRideModel.getDeparture(),
+                        searchRideModel.getDestination(), new Date());
+                noRides = rideRepository.countByDepartureIgnoreCaseAndDestinationIgnoreCaseAndDepartureTimeGreaterThan(searchRideModel.getDeparture(),
+                        searchRideModel.getDestination(), new Date());
             } else {
                 if (!searchRideModel.getDeparture().equals("")) {
-                    rides = rideRepository.findByDepartureIgnoreCaseAndDepartureTimeGreaterThan(searchRideModel.getDeparture(), new Date());
+                    rides = rideRepository.findByDepartureIgnoreCaseAndDepartureTimeGreaterThan(pageable, searchRideModel.getDeparture(), new Date());
+                    noRides = rideRepository.countByDepartureIgnoreCaseAndDepartureTimeGreaterThan(searchRideModel.getDeparture(), new Date());
                 } else {
                     if (!searchRideModel.getDestination().equals("")) {
-                        rides = rideRepository.findByDestinationIgnoreCaseAndDepartureTimeGreaterThan(searchRideModel.getDestination(), new Date());
+                        rides = rideRepository.findByDestinationIgnoreCaseAndDepartureTimeGreaterThan(pageable, searchRideModel.getDestination(), new Date());
+                        noRides = rideRepository.countByDestinationIgnoreCaseAndDepartureTimeGreaterThan(searchRideModel.getDestination(), new Date());
                     } else {
-                        rides = rideRepository.findByDepartureTimeGreaterThan(new Date());
+                        rides = rideRepository.findByDepartureTimeGreaterThan(pageable, new Date());
+                        noRides = rideRepository.countByDepartureTimeGreaterThan(new Date());
                     }
                 }
             }
         } else {
-            rides = rideRepository.findByDepartureTimeGreaterThan(new Date());
+            rides = rideRepository.findByDepartureTimeGreaterThan(pageable, new Date());
+            noRides = rideRepository.countByDepartureTimeGreaterThan(new Date());
         }
-        return rides;
+
+        List<RideModel> rideModels = createRideModelList(rides);
+
+        return new PageImpl<>(rideModels, new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort()),
+                noRides);
     }
 
-    private List<Ride> getUserRides(SearchRideModel searchRideModel, String username) {
-        List<Ride> rides = new ArrayList<>();
+    private List<RideModel> createRideModelList(Page<Ride> rides) {
+
+        List<RideModel> rideModels = new ArrayList<>();
+
+        for(Ride ride : rides) {
+            addToRideModelList(rideModels, ride);
+        }
+        return rideModels;
+    }
+
+    private void addToRideModelList(List<RideModel> rideModels, Ride ride) {
+        Driver driver = driverRepository.getByIdRide(ride.getIdRide());
+        AppUser user = userRepository.findOne(driver.getIdAppUser());
+        Car car = carRepository.findOne(driver.getIdCar());
+
+        RideModel rideModel = rideMapper.RideModelMapper(ride, driver, user, car);
+
+        if (rideModel != null) {
+            rideModels.add(rideModel);
+        }
+    }
+
+    public Page<RideModel> getAllRidesForUser(Pageable pageable, String username) {
 
         AppUser user = userRepository.findByUsername(username);
+
+        List<Ride> rides = getUserRides(user);
+
+        List<Ride> pageRides = new ArrayList<>();
+
+        Integer offset = pageable.getPageSize() * pageable.getPageNumber();
+        Integer limit = pageable.getPageSize() * pageable.getPageNumber() + pageable.getPageSize();
+
+        for (int i = offset; i < rides.size() && i < limit; i++) {
+            pageRides.add(rides.get(i));
+        }
+
+        List<RideModel> rideModels = createRideModelListForUser(pageRides);
+
+
+        return new PageImpl<>(rideModels, new PageRequest(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort()),
+                rides.size());
+    }
+
+    private List<Ride> getUserRides(AppUser user) {
+
+        List<Ride> rides = new ArrayList<>();
 
         List<Driver> drivers = driverRepository.findByIdAppUser(user.getIdAppUser());
 
         for(Driver driver : drivers) {
-            Ride ride = rideRepository.findOne(driver.getIdRide());
-            if(ride.getDepartureTime().compareTo(new Date()) > 0) {
+            Ride ride = rideRepository.findByIdRideAndDepartureTimeGreaterThan(driver.getIdRide(), new Date());
+            if(ride!= null) {
                 rides.add(ride);
             }
         }
 
         return rides;
+    }
+
+    private List<RideModel> createRideModelListForUser(List<Ride> rides) {
+        List<RideModel> rideModels = new ArrayList<>();
+
+        for(Ride ride : rides) {
+            addToRideModelList(rideModels, ride);
+        }
+        return rideModels;
     }
 
     public Ride getRideById(Long id) {

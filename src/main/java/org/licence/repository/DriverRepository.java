@@ -15,4 +15,6 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
     Driver findByIdRide(Long idRide);
 
     List<Driver> findByIdAppUser(Long idAppUser);
+
+    Long countByIdAppUser(Long idAppUser);
 }

@@ -39,5 +39,8 @@ public class AppUser {
 
     private boolean enabled;
 
+    @NotNull
+    private Long idUserRole;
+
 
 }

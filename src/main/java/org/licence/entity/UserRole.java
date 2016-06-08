@@ -22,8 +22,4 @@ public class UserRole {
     @NotNull
     private String role;
 
-//    @ManyToOne(targetEntity = AppUser.class)
-    @NotNull
-    @JoinColumn(name = "id_app_user")
-    private Long idAppUser;
 }

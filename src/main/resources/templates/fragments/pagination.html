@@ -1,0 +1,42 @@
+<!-- Pagination Bar -->
+<div th:fragment='paginationbar(page)'>
+    <div class="bottom">
+        <!-- <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">
+             Showing 1 to 1 of 1 entries
+         </div>-->
+        <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+            <ul class="pagination">
+
+                <li th:class="${page.firstPage}? 'paginate_button disabled' : 'paginate_button'">
+                    <span th:if="${page.firstPage}">Prima</span>
+                    <a th:if="${not page.firstPage}" th:href="@{${page.url}(page.number=1)}">Prima</a>
+                </li>
+
+                <li th:class="${page.hasPreviousPage}? 'paginate_button previous' : 'paginate_button previous disabled'">
+                    <span th:if="${not page.hasPreviousPage}">Inapoi</span>
+                    <a th:if="${page.hasPreviousPage}" th:href="@{${page.url}(page.number=${page.number-1})}">Inapoi</a>
+                </li>
+
+                <li th:each="item : ${page.items}"
+                    th:class="${item.current}? 'paginate_button active' : 'paginate_button'">
+                    <span th:if="${item.current}" th:text="${item.number}">1</span>
+                    <a th:if="${not item.current}" th:href="@{${page.url}(page.number=${item.number})}">
+                        <span th:text="${item.number}">1</span></a>
+                </li>
+
+                <li th:class="${page.hasNextPage}? 'paginate_button next' : 'paginate_button next disabled'">
+                    <span th:if="${not page.hasNextPage}">Inainte</span>
+                    <a th:if="${page.hasNextPage}" th:href="@{${page.url}(page.number=${page.number+1})}">Inainte</a>
+                </li>
+
+                <li th:class="${page.lastPage}? 'paginate_button disabled' : 'paginate_button'">
+                    <span th:if="${page.lastPage}">Ultima</span>
+                    <a th:if="${not page.lastPage}" th:href="@{${page.url}(page.number=${page.totalPages})}">Ultima</a>
+                </li>
+
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+</div>

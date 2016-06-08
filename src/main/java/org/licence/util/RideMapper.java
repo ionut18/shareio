@@ -46,11 +46,7 @@ public class RideMapper {
         rideModel.setAvailableInsteadStorage(ride.getAvailableInsteadStorage());
         rideModel.setAvailableSeats(ride.getAvailableSeats());
 
-        if(rideModel.getAvailableSeats() > 0) {
-            return rideModel;
-        } else {
-            return null;
-        }
+        return rideModel;
     }
 
 }
