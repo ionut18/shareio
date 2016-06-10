@@ -8,6 +8,7 @@ CREATE TABLE app_user (
 	last_name character varying(255),
 	email character varying(255),
 	enabled boolean,
+	telephone character varying(255),
 	id_user_role bigint NOT NULL
 );
 
@@ -122,10 +123,3 @@ ALTER TABLE ONLY car
 
 ALTER TABLE ONLY message
 	ADD CONSTRAINT message_ride_fk FOREIGN KEY (id_ride) REFERENCES ride(id_ride);
-
---ALTER
-ALTER TABLE app_user
-	ADD COLUMN telephone character varying(255)
-
-ALTER TABLE car
-  ADD COLUMN id_app_user bigint

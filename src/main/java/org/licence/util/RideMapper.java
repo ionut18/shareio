@@ -45,6 +45,7 @@ public class RideMapper {
         rideModel.setRating(driver.getRating());
         rideModel.setAvailableInsteadStorage(ride.getAvailableInsteadStorage());
         rideModel.setAvailableSeats(ride.getAvailableSeats());
+        rideModel.setUser(user);
 
         return rideModel;
     }

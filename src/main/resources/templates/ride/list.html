@@ -31,15 +31,15 @@
                             <div class="panel-body">
                                 <div>
                                     <img class="driverImage" th:src="@{/img/driver-male-72.png}"/>
-                                    <span class="marginLeft" th:text="${ride.driverName}"> </span>
+                                    <a data-toggle="tooltip" th:title="'Nume:' + ${ride.user.firstName} + ' Email:' + ${ride.user.email} + ' Telefon:' + ${ride.user.telephone}"><span class="marginLeft" th:text="${ride.driverName}"> </span> </a>
                                 </div>
                                 <div class="marginTop">
                                     <span>Masina: &nbsp;</span>
                                     <a data-toggle="tooltip" th:title="'Confort: ' + ${ride.carComfort}"><span th:text="${ride.carName}"> </span></a>
                                 </div>
-                                <div class="marginTop">
-                                    <span>Rating: &nbsp;</span><span th:text="${ride.rating}"> </span>
-                                </div>
+                                <!--<div class="marginTop">-->
+                                    <!--<span>Rating: &nbsp;</span><span th:text="${ride.rating}"> </span>-->
+                                <!--</div>-->
                             </div>
                         </div>
 

@@ -2,6 +2,7 @@ package org.licence.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.licence.entity.AppUser;
 
 /**
  * Created by ionut on 25.04.2016.
@@ -33,4 +34,6 @@ public class RideModel {
     private Integer availableSeats;
 
     private String availableInsteadStorage;
+
+    private AppUser user;
 }
