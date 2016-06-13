@@ -60,14 +60,15 @@ public class RideService {
         AppUser user = userService.getUserByUsername(username);
         try {
             Car car = carService.getCarByIdAppUser(user.getIdAppUser());
+            if(driverRepository.findByIdRide(ride.getIdRide()) == null) {
+                Driver driver = new Driver();
+                driver.setIdAppUser(user.getIdAppUser());
+                driver.setIdCar(car.getIdCar());
+                driver.setIdRide(ride.getIdRide());
+                driver.setRating("Good");
 
-            Driver driver = new Driver();
-            driver.setIdAppUser(user.getIdAppUser());
-            driver.setIdCar(car.getIdCar());
-            driver.setIdRide(ride.getIdRide());
-            driver.setRating("Good");
-
-            driverRepository.save(driver);
+                driverRepository.save(driver);
+            }
         }
         catch (NullPointerException e) {
             e.printStackTrace();

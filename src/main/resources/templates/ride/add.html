@@ -9,7 +9,7 @@
 
 <div class="container">
 
-    <div class="panel panel-green margin-bottom-container">
+    <div class="panel panel-green margin-bottom-container extraMarginBottom">
         <div class="panel-heading">
             <h3 class="panel-title">Add a ride</h3>
         </div>
@@ -45,8 +45,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="kilometers">Distanta</label>
-                    <input type="number" class="form-control" id="kilometers" name="kilometers" placeholder="Kilometrii" th:value="${ride.getDistance}"/>
+                    <label for="distance">Distanta</label>
+                    <input type="number" class="form-control" id="distance" name="distance" placeholder="Distanta" th:value="${ride.distance}"/>
                 </div>
 
                 <div class="form-group">
