@@ -1,6 +1,5 @@
 package org.licence.util;
 
-import org.licence.entity.AppUser;
 import org.licence.entity.Message;
 import org.licence.model.MessageModel;
 import org.licence.repository.AppUserRepository;

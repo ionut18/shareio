@@ -3,7 +3,6 @@ package org.licence.controller;
 import org.licence.entity.Car;
 import org.licence.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.instrument.classloading.LoadTimeWeaver;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
