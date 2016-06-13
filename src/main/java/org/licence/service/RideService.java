@@ -6,8 +6,6 @@ import org.licence.entity.Driver;
 import org.licence.entity.Ride;
 import org.licence.model.RideModel;
 import org.licence.model.SearchRideModel;
-import org.licence.repository.AppUserRepository;
-import org.licence.repository.CarRepository;
 import org.licence.repository.DriverRepository;
 import org.licence.repository.RideRepository;
 import org.licence.util.RideMapper;
@@ -33,43 +31,47 @@ public class RideService {
     private RideRepository rideRepository;
 
     @Autowired
-    private AppUserRepository userRepository;
-
-    @Autowired
-    private CarRepository carRepository;
-
-    @Autowired
-    private MessageService commentService;
-
-    @Autowired
     private DriverRepository driverRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private CarService carService;
+
+    @Autowired
+    private MessageService messageService;
 
     @Autowired
     private RideMapper rideMapper;
 
+    @Transactional
     public void saveRideAndDriver(Ride ride, String username) {
         saveRide(ride);
 
         saveDriver(ride, username);
     }
 
-    @Transactional
     public void saveRide(Ride ride) {
         rideRepository.save(ride);
     }
 
     private void saveDriver(Ride ride, String username) {
-        AppUser user = userRepository.findByUsername(username);
-        //// TODO: if exists car
-        Car car = carRepository.findByIdAppUser(user.getIdAppUser());
+        AppUser user = userService.getUserByUsername(username);
+        try {
+            Car car = carService.getCarByIdAppUser(user.getIdAppUser());
 
-        Driver driver = new Driver();
-        driver.setIdAppUser(user.getIdAppUser());
-        driver.setIdCar(car.getIdCar());
-        driver.setIdRide(ride.getIdRide());
-        driver.setRating("Good");
+            Driver driver = new Driver();
+            driver.setIdAppUser(user.getIdAppUser());
+            driver.setIdCar(car.getIdCar());
+            driver.setIdRide(ride.getIdRide());
+            driver.setRating("Good");
 
-        driverRepository.save(driver);
+            driverRepository.save(driver);
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     public Page<RideModel> getAllRides(Pageable pageable, SearchRideModel searchRideModel) {
@@ -78,27 +80,27 @@ public class RideService {
         Long noRides;
         if(searchRideModel.getDeparture() != null && searchRideModel.getDestination() != null) {
             if (!searchRideModel.getDeparture().equals("") && !searchRideModel.getDestination().equals("")) {
-                rides = rideRepository.findByDepartureIgnoreCaseAndDestinationIgnoreCaseAndDepartureTimeGreaterThan(pageable, searchRideModel.getDeparture(),
-                        searchRideModel.getDestination(), new Date());
-                noRides = rideRepository.countByDepartureIgnoreCaseAndDestinationIgnoreCaseAndDepartureTimeGreaterThan(searchRideModel.getDeparture(),
-                        searchRideModel.getDestination(), new Date());
+                rides = rideRepository.findByDepartureIgnoreCaseAndDestinationIgnoreCaseAndDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(pageable, searchRideModel.getDeparture(),
+                        searchRideModel.getDestination(), new Date(), 0);
+                noRides = rideRepository.countByDepartureIgnoreCaseAndDestinationIgnoreCaseAndDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(searchRideModel.getDeparture(),
+                        searchRideModel.getDestination(), new Date(), 0);
             } else {
                 if (!searchRideModel.getDeparture().equals("")) {
-                    rides = rideRepository.findByDepartureIgnoreCaseAndDepartureTimeGreaterThan(pageable, searchRideModel.getDeparture(), new Date());
-                    noRides = rideRepository.countByDepartureIgnoreCaseAndDepartureTimeGreaterThan(searchRideModel.getDeparture(), new Date());
+                    rides = rideRepository.findByDepartureIgnoreCaseAndDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(pageable, searchRideModel.getDeparture(), new Date(), 0);
+                    noRides = rideRepository.countByDepartureIgnoreCaseAndDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(searchRideModel.getDeparture(), new Date(), 0);
                 } else {
                     if (!searchRideModel.getDestination().equals("")) {
-                        rides = rideRepository.findByDestinationIgnoreCaseAndDepartureTimeGreaterThan(pageable, searchRideModel.getDestination(), new Date());
-                        noRides = rideRepository.countByDestinationIgnoreCaseAndDepartureTimeGreaterThan(searchRideModel.getDestination(), new Date());
+                        rides = rideRepository.findByDestinationIgnoreCaseAndDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(pageable, searchRideModel.getDestination(), new Date(), 0);
+                        noRides = rideRepository.countByDestinationIgnoreCaseAndDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(searchRideModel.getDestination(), new Date(), 0);
                     } else {
-                        rides = rideRepository.findByDepartureTimeGreaterThan(pageable, new Date());
-                        noRides = rideRepository.countByDepartureTimeGreaterThan(new Date());
+                        rides = rideRepository.findByDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(pageable, new Date(), 0);
+                        noRides = rideRepository.countByDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(new Date(), 0);
                     }
                 }
             }
         } else {
-            rides = rideRepository.findByDepartureTimeGreaterThan(pageable, new Date());
-            noRides = rideRepository.countByDepartureTimeGreaterThan(new Date());
+            rides = rideRepository.findByDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(pageable, new Date(), 0);
+            noRides = rideRepository.countByDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(new Date(), 0);
         }
 
         List<RideModel> rideModels = createRideModelList(rides);
@@ -119,8 +121,8 @@ public class RideService {
 
     private void addToRideModelList(List<RideModel> rideModels, Ride ride) {
         Driver driver = driverRepository.getByIdRide(ride.getIdRide());
-        AppUser user = userRepository.findOne(driver.getIdAppUser());
-        Car car = carRepository.findOne(driver.getIdCar());
+        AppUser user = userService.getUserById(driver.getIdAppUser());
+        Car car = carService.getCarById(driver.getIdCar());
 
         RideModel rideModel = rideMapper.RideModelMapper(ride, driver, user, car);
 
@@ -131,7 +133,7 @@ public class RideService {
 
     public Page<RideModel> getAllRidesForUser(Pageable pageable, String username) {
 
-        AppUser user = userRepository.findByUsername(username);
+        AppUser user = userService.getUserByUsername(username);
 
         List<Ride> rides = getUserRides(user);
 
@@ -158,7 +160,7 @@ public class RideService {
         List<Driver> drivers = driverRepository.findByIdAppUser(user.getIdAppUser());
 
         for(Driver driver : drivers) {
-            Ride ride = rideRepository.findByIdRideAndDepartureTimeGreaterThan(driver.getIdRide(), new Date());
+            Ride ride = rideRepository.findByIdRideAndDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(driver.getIdRide(), new Date(), 0);
             if(ride!= null) {
                 rides.add(ride);
             }
@@ -185,10 +187,10 @@ public class RideService {
 
         Driver driver = driverRepository.findByIdRide(idRide);
 
-        AppUser driverUser = userRepository.findOne(driver.getIdAppUser());
+        AppUser driverUser = userService.getUserById(driver.getIdAppUser());
 
         if(!driverUser.getUsername().equals(passengerUserName) && passengerUserName != null) {
-            commentService.sendDefaultMessageToDriver(driverUser.getUsername(), passengerUserName, ride);
+            messageService.sendDefaultMessageToDriver(driverUser.getUsername(), passengerUserName, ride);
         } else {
             // TODO: The same user and driver
         }

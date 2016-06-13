@@ -12,22 +12,22 @@ import java.util.Date;
  */
 public interface RideRepository extends JpaRepository<Ride, Long> {
 
-    Page<Ride> findByDepartureIgnoreCaseAndDestinationIgnoreCaseAndDepartureTimeGreaterThan(Pageable pageable, String departure, String destination, Date departureTime);
+    Page<Ride> findByDepartureIgnoreCaseAndDestinationIgnoreCaseAndDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(Pageable pageable, String departure, String destination, Date departureTime, Integer noSeats);
 
-    Long countByDepartureIgnoreCaseAndDestinationIgnoreCaseAndDepartureTimeGreaterThan(String departure, String destination, Date departureTime);
+    Long countByDepartureIgnoreCaseAndDestinationIgnoreCaseAndDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(String departure, String destination, Date departureTime, Integer noSeats);
 
-    Page<Ride> findByDepartureIgnoreCaseAndDepartureTimeGreaterThan(Pageable pageable, String departure, Date departureTime);
+    Page<Ride> findByDepartureIgnoreCaseAndDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(Pageable pageable, String departure, Date departureTime, Integer noSeats);
 
-    Long countByDepartureIgnoreCaseAndDepartureTimeGreaterThan(String departure, Date departureTime);
+    Long countByDepartureIgnoreCaseAndDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(String departure, Date departureTime, Integer noSeats);
 
-    Page<Ride> findByDestinationIgnoreCaseAndDepartureTimeGreaterThan(Pageable pageable, String destination, Date departureTime);
+    Page<Ride> findByDestinationIgnoreCaseAndDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(Pageable pageable, String destination, Date departureTime, Integer noSeats);
 
-    Long countByDestinationIgnoreCaseAndDepartureTimeGreaterThan(String destination, Date departureTime);
+    Long countByDestinationIgnoreCaseAndDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(String destination, Date departureTime, Integer noSeats);
 
-    Page<Ride> findByDepartureTimeGreaterThan(Pageable pageable, Date departureTime);
+    Page<Ride> findByDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(Pageable pageable, Date departureTime, Integer noSeats);
 
-    Ride findByIdRideAndDepartureTimeGreaterThan(Long idRide, Date departureTime);
+    Ride findByIdRideAndDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(Long idRide, Date departureTime, Integer noSeats);
 
-    Long countByDepartureTimeGreaterThan(Date departureTime);
+    Long countByDepartureTimeGreaterThanAndAvailableSeatsGreaterThan(Date departureTime, Integer noSeats);
 
 }

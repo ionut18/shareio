@@ -2,7 +2,6 @@ package org.licence.service;
 
 import org.licence.entity.AppUser;
 import org.licence.entity.Car;
-import org.licence.repository.AppUserRepository;
 import org.licence.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,20 +16,24 @@ public class CarService {
     private CarRepository carRepository;
 
     @Autowired
-    private AppUserRepository userRepository;
+    private UserService userService;
 
     public void saveCar(Car car, String username) {
-        AppUser user = userRepository.findByUsername(username);
+        AppUser user = userService.getUserByUsername(username);
         car.setIdAppUser(user.getIdAppUser());
         carRepository.save(car);
     }
 
     public Car getCarByUsername(String username) {
-        AppUser user = userRepository.findByUsername(username);
+        AppUser user = userService.getUserByUsername(username);
         return carRepository.findByIdAppUser(user.getIdAppUser());
     }
 
     public Car getCarById(Long id) {
         return carRepository.getOne(id);
+    }
+
+    public Car getCarByIdAppUser(Long idAppUser) {
+        return carRepository.findByIdAppUser(idAppUser);
     }
 }

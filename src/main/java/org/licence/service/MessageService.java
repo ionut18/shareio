@@ -5,7 +5,6 @@ import org.licence.entity.Message;
 import org.licence.entity.Passenger;
 import org.licence.entity.Ride;
 import org.licence.model.MessageModel;
-import org.licence.repository.AppUserRepository;
 import org.licence.repository.MessageRepository;
 import org.licence.repository.PassengerRepository;
 import org.licence.util.MessageMapper;
@@ -26,7 +25,7 @@ public class MessageService {
     MessageRepository messageRepository;
 
     @Autowired
-    AppUserRepository appUserRepository;
+    UserService userService;
 
     @Autowired
     PassengerRepository passengerRepository;
@@ -100,7 +99,7 @@ public class MessageService {
 
     private void savePassenger(String receiver, Long idRide) {
 
-        AppUser user = appUserRepository.findByUsername(receiver);
+        AppUser user = userService.getUserByUsername(receiver);
 
         Passenger passenger = new Passenger();
         passenger.setIdRide(idRide);

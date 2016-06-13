@@ -29,7 +29,7 @@ public class Ride {
 
     private Integer price;
 
-    private Integer kilometers;
+    private Integer distance;
 
     private Integer availableSeats;
 

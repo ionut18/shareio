@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -40,7 +38,7 @@ public class RideMapper {
             e.printStackTrace();
         }
 
-        rideModel.setDistance(ride.getKilometers());
+        rideModel.setDistance(ride.getDistance());
         rideModel.setPrice(ride.getPrice());
         rideModel.setRating(driver.getRating());
         rideModel.setAvailableInsteadStorage(ride.getAvailableInsteadStorage());

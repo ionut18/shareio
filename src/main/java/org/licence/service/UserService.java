@@ -46,4 +46,13 @@ public class UserService {
         return userRole.getRole();
     }
 
+    public AppUser getUserByUsername(String username) {
+        return appUserRepository.findByUsername(username);
+    }
+
+
+    public AppUser getUserById(Long id) {
+        return appUserRepository.findOne(id);
+    }
+
 }

@@ -23,7 +23,7 @@ CREATE TABLE ride (
 	destination character varying(255),
 	departure_time timestamp,
 	price smallint,
-	kilometers smallint,
+	distance smallint,
 	available_seats smallint,
 	available_instead_storage character varying(255)
 );
